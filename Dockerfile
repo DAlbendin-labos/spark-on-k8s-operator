@@ -29,6 +29,7 @@ COPY . ./
 RUN go generate && CGO_ENABLED=0 GOOS=linux go build -o /usr/bin/spark-operator
 
 FROM ${SPARK_IMAGE}
+USER root
 COPY --from=builder /usr/bin/spark-operator /usr/bin/
 RUN apt-get update \
     && apt-get install -y openssl curl tini \
@@ -36,5 +37,7 @@ RUN apt-get update \
 
 COPY hack/gencerts.sh /usr/bin/
 COPY entrypoint.sh /usr/bin/
+
+USER 1000
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
