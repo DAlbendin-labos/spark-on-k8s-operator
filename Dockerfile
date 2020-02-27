@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG SPARK_IMAGE=docker.io/dalbendin/spark-runnable:latest
+ARG SPARK_IMAGE=docker.io/dalbendinlabos/spark-runnable:latest
 
 FROM golang:1.12.5-alpine as builder
 ARG DEP_VERSION="0.5.3"
