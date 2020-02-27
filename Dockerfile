@@ -1,4 +1,3 @@
-#
 # Copyright 2017 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG SPARK_IMAGE=gcr.io/spark-operator/spark:v2.4.5
+ARG SPARK_IMAGE=docker.io/dalbendin/spark-runnable:latest
 
 FROM golang:1.12.5-alpine as builder
 ARG DEP_VERSION="0.5.3"
