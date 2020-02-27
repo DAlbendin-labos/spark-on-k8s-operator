@@ -1,4 +1,3 @@
-#
 # Copyright 2017 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
 # limitations under the License.
 #
 
-ARG SPARK_IMAGE=docker.io/dalbendinlabos/spark-runnable:latest
+ARG SPARK_IMAGE=docker.io/dalbendin/spark-runnable:latest
 
 FROM golang:1.12.5-alpine as builder
 ARG DEP_VERSION="0.5.3"
@@ -29,15 +28,11 @@ COPY . ./
 RUN go generate && CGO_ENABLED=0 GOOS=linux go build -o /usr/bin/spark-operator
 
 FROM ${SPARK_IMAGE}
-USER root
 COPY --from=builder /usr/bin/spark-operator /usr/bin/
 RUN apt-get update \
     && apt-get install -y openssl curl tini \
     && rm -rf /var/lib/apt/lists/*
-
 COPY hack/gencerts.sh /usr/bin/
+
 COPY entrypoint.sh /usr/bin/
-
-USER 1000
-
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
